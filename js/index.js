@@ -1,4 +1,9 @@
 // Your code goes here
+//Keep all links from refreshing page
+document.querySelector('body').addEventListener('click', e => {
+    if (e.target.tagName === 'a') e.preventDefault();
+});
+
 // 1. Change background color on DOMContentLoaded
 const changeBgColor = function(elem, newColor) {
     elem.style.backgroundColor = newColor;
