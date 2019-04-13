@@ -74,7 +74,6 @@ const nav = document.querySelector('.nav').addEventListener('mouseenter', e => {
     const target = e.target;
     const links = [...target.querySelectorAll('.nav-link')];
     shuffle(links);
-    target.innerHTML = '';
     links.forEach(link => target.appendChild(link));
 });
 
