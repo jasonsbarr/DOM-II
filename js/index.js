@@ -27,7 +27,7 @@ document.querySelector('body').addEventListener('dblclick', e => {
     setTimeout(function() {
         document.body.style.transition = null;
         document.body.style.transform = null;
-    }, 600);
+    }, 1100);
 });
 
 // 4. Make entire page disappear on pressing enter
@@ -37,6 +37,7 @@ body.style.opacity = 1;
 document.addEventListener('keypress', e => {
     if (e.key === 'Enter') {
         body.style.opacity = (body.style.opacity === '1') ? '0' : '1';
+        e.preventDefault();
     }
 });
 
@@ -78,13 +79,31 @@ const nav = document.querySelector('.nav').addEventListener('mouseenter', e => {
 });
 
 // 6. Tile image as page background on dblclick
-document.querySelectorAll('img').forEach(img => img.addEventListener('click', e => {
-    if (document.querySelector('body').style.backgroundImage != `url(${e.target.src})`) {
-        document.body.style.backgroundImage = `url(${e.target.src})`;
-    }
-}));
+document.querySelectorAll('img').forEach(img => {
+    img.addEventListener('click', e => {
+        e.stopPropagation();
+        if (document.querySelector('body').style.backgroundImage != `url(${e.target.src})`) {
+            document.body.style.backgroundImage = `url(${e.target.src})`;
+        }
+    });
+
+    img.addEventListener('dblclick', e => e.stopPropagation());
+});
 
 // 7. Clear with ESC key
 document.querySelector('body').addEventListener('keydown', e => {
     if (e.key === 'Escape') document.body.style.backgroundImage = '';
 });
+
+// 8. Get text when selected by mouse and alert it
+document.querySelectorAll('p').forEach(para => {
+    para.addEventListener('mouseup', e => {
+        if (e.target.tagName.toLowerCase() === 'p') {
+            if (getSelection().toString() != '') {
+                alert(getSelection().toString());
+            }
+        }
+    });
+    // Keep double click from triggering both alert and above-defined rotation
+    para.addEventListener('dblclick', e => e.stopPropagation());
+}, true);
